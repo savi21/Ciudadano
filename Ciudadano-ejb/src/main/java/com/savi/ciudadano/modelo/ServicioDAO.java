@@ -32,8 +32,8 @@ public abstract class ServicioDAO<T> {
         em.persist(entity);
     }
 
-    public void edit(T entity) {
-        em.merge(entity);
+    public T edit(T entity) {
+        return em.merge(entity);
     }
 
     public void remove(T entity) {
