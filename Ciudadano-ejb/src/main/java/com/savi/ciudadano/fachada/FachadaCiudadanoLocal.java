@@ -19,11 +19,13 @@ public interface FachadaCiudadanoLocal {
  
     public abstract Ciudadano actualizar(Ciudadano ciudadano);
  
-    public abstract void delete(Ciudadano ciudadano);
+    public abstract void borrar(Ciudadano ciudadano);
  
     public abstract Ciudadano buscar(int entityID);
  
     public abstract List<Ciudadano> buscarTodos();
     
-    public abstract List<Ciudadano> buscarRango(int[] range); 
+    public abstract List<Ciudadano> buscarRango(int[] range);
+    
+    public abstract int contar();
 }

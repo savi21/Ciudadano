@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CiudadanoEditDlg" widgetVar="CiudadanoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCiudadanoTitle}">
+            <h:form id="CiudadanoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ciudadanoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCiudadanoLabel_ciudadanoId}" for="ciudadanoId" />
+                        <p:inputText id="ciudadanoId" value="#{ciudadanoController.selected.ciudadanoId}" title="#{bundle.EditCiudadanoTitle_ciudadanoId}" />
+                        <p:outputLabel value="#{bundle.EditCiudadanoLabel_primerNombre}" for="primerNombre" />
+                        <p:inputText id="primerNombre" value="#{ciudadanoController.selected.primerNombre}" title="#{bundle.EditCiudadanoTitle_primerNombre}" />
+                        <p:outputLabel value="#{bundle.EditCiudadanoLabel_segundoNombre}" for="segundoNombre" />
+                        <p:inputText id="segundoNombre" value="#{ciudadanoController.selected.segundoNombre}" title="#{bundle.EditCiudadanoTitle_segundoNombre}" />
+                        <p:outputLabel value="#{bundle.EditCiudadanoLabel_primerAppellido}" for="primerAppellido" />
+                        <p:inputText id="primerAppellido" value="#{ciudadanoController.selected.primerAppellido}" title="#{bundle.EditCiudadanoTitle_primerAppellido}" />
+                        <p:outputLabel value="#{bundle.EditCiudadanoLabel_segundoApellido}" for="segundoApellido" />
+                        <p:inputText id="segundoApellido" value="#{ciudadanoController.selected.segundoApellido}" title="#{bundle.EditCiudadanoTitle_segundoApellido}" />
+                        <p:outputLabel value="#{bundle.EditCiudadanoLabel_sexo}" for="sexo" />
+                        <p:inputText id="sexo" value="#{ciudadanoController.selected.sexo}" title="#{bundle.EditCiudadanoTitle_sexo}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ciudadanoController.update}" value="#{bundle.Save}" update="display,:CiudadanoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CiudadanoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CiudadanoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

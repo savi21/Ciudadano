@@ -6,7 +6,7 @@
 package com.savi.ciudadano.fachada.impl;
 
 import com.savi.ciudadano.fachada.FachadaCiudadanoLocal;
-import com.savi.ciudadano.modelo.CiudadanoDAO;
+import com.savi.ciudadano.modelo.ServicioDAO;
 import com.savi.ciudadano.modelo.entidades.Ciudadano;
 import java.util.List;
 import javax.ejb.EJB;
@@ -18,11 +18,9 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class FachadaCiudadano implements FachadaCiudadanoLocal {
+    
     @EJB
-    private CiudadanoDAO ciudadanoDAO;
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    private ServicioDAO<Ciudadano> ciudadanoDAO;
 
     @Override
     public void guardar(Ciudadano ciudadano) {
@@ -35,7 +33,7 @@ public class FachadaCiudadano implements FachadaCiudadanoLocal {
     }
 
     @Override
-    public void delete(Ciudadano ciudadano) {
+    public void borrar(Ciudadano ciudadano) {
         ciudadanoDAO.remove(ciudadano);
     }
 
@@ -52,6 +50,11 @@ public class FachadaCiudadano implements FachadaCiudadanoLocal {
     @Override
     public List<Ciudadano> buscarRango(int[] range) {
        return ciudadanoDAO.findRange(range);
+    }
+
+    @Override
+    public int contar() {
+        return ciudadanoDAO.count();
     }
     
     

@@ -6,9 +6,6 @@
 package com.savi.ciudadano.modelo.entidades;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,13 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -30,58 +24,49 @@ import javax.xml.bind.annotation.XmlType;
  */
 @Entity
 @Table(name = "DIRECCION")
-@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-@XmlType(name = "Direccion",namespace = "direccion")
 public class Direccion implements Serializable {
     
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @XmlElement(name = "DireccionID", nillable = false)
-    @Column(name = "DIRECCION_ID")
-    private BigDecimal direccionId;
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Direccion_ID")
+    private Long direccionId;
+    
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "CALLE")
+    @Column(name = "Calle")
     private String calle;
-    @Column(name = "NUMERO_DOMICILIO")
-    private BigInteger numeroDomicilio;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "SECTOR")
-    private String sector;
-    @JoinColumn(name = "CIUDAD_ID", referencedColumnName = "CIUDAD_ID")
-    @ManyToOne
+    
+    @Column(name = "Numero_Domicilio")
+    private Long numeroDomicilio;
+    
+    @JoinColumn(name = "Sector_ID", referencedColumnName = "Sector_ID")
+    @OneToOne
+    private Sector sectorId;
+    
+    @JoinColumn(name = "Ciudad_ID", referencedColumnName = "Ciudad_ID")
+    @OneToOne
     private Ciudad ciudadId;
-    @JoinColumn(name = "CIUDADANO_ID", referencedColumnName = "CIUDADANO_ID")
-    @ManyToOne
-    private Ciudadano ciudadanoId;
-    @JoinColumn(name = "PAIS_ID", referencedColumnName = "PAIS_ID")
-    @ManyToOne
+    
+    @JoinColumn(name = "Pais_ID", referencedColumnName = "Pais_ID")
+    @OneToOne
     private Pais paisId;
-    @JoinColumn(name = "PROVINCIA_ID", referencedColumnName = "PROVINCIA_ID")
-    @ManyToOne
+    
+    @JoinColumn(name = "Provincia_ID", referencedColumnName = "Provincia_ID")
+    @OneToOne
     private Provincia provinciaId;
 
     public Direccion() {
     }
 
-    public Direccion(BigDecimal direccionId) {
+    public Direccion(Long direccionId) {
         this.direccionId = direccionId;
     }
 
-    public Direccion(BigDecimal direccionId, String calle, String sector) {
-        this.direccionId = direccionId;
-        this.calle = calle;
-        this.sector = sector;
-    }
-
-    public BigDecimal getDireccionId() {
+    public Long getDireccionId() {
         return direccionId;
     }
 
-    public void setDireccionId(BigDecimal direccionId) {
+    public void setDireccionId(Long direccionId) {
         this.direccionId = direccionId;
     }
 
@@ -93,21 +78,15 @@ public class Direccion implements Serializable {
         this.calle = calle;
     }
 
-    public BigInteger getNumeroDomicilio() {
+    public Long getNumeroDomicilio() {
         return numeroDomicilio;
     }
 
-    public void setNumeroDomicilio(BigInteger numeroDomicilio) {
+    public void setNumeroDomicilio(Long numeroDomicilio) {
         this.numeroDomicilio = numeroDomicilio;
     }
 
-    public String getSector() {
-        return sector;
-    }
-
-    public void setSector(String sector) {
-        this.sector = sector;
-    }
+   
 
     public Ciudad getCiudadId() {
         return ciudadId;
@@ -115,14 +94,6 @@ public class Direccion implements Serializable {
 
     public void setCiudadId(Ciudad ciudadId) {
         this.ciudadId = ciudadId;
-    }
-
-    public Ciudadano getCiudadanoId() {
-        return ciudadanoId;
-    }
-
-    public void setCiudadanoId(Ciudadano ciudadanoId) {
-        this.ciudadanoId = ciudadanoId;
     }
 
     public Pais getPaisId() {
@@ -139,6 +110,20 @@ public class Direccion implements Serializable {
 
     public void setProvinciaId(Provincia provinciaId) {
         this.provinciaId = provinciaId;
+    }
+
+    /**
+     * @return the sectorId
+     */
+    public Sector getSectorId() {
+        return sectorId;
+    }
+
+    /**
+     * @param sectorId the sectorId to set
+     */
+    public void setSectorId(Sector sectorId) {
+        this.sectorId = sectorId;
     }
 
   
