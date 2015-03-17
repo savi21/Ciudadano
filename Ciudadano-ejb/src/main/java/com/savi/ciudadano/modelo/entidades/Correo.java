@@ -6,15 +6,11 @@
 package com.savi.ciudadano.modelo.entidades;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -22,36 +18,43 @@ import javax.validation.constraints.Size;
  * @author savir_000
  */
 @Entity
-@Table(name = "CORREO")
 public class Correo implements Serializable {
-
-    public Correo() {
-    }
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Correo_ID")
-    private Long id;
+    private Long correoId;
+  
+    @NotNull
+    @Size(min = 1, max = 100)
+    private String direccionCorreo;
     
-    @Size(max = 100)
-    @Column(name = "Direccion_Correo")   
-    private String direccion;
-
-    public Long getId() {
-        return id;
+    public Correo() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Correo(String direccion) {
+        this.direccionCorreo = direccion;
     }
+
+    public Long getCorreoId() {
+        return correoId;
+    }
+
+    public void setCorreoId(Long correoId) {
+        this.correoId = correoId;
+    }
+
+    public String getDireccionCorreo() {
+        return direccionCorreo;
+    }
+
+    public void setDireccionCorreo(String direccionCorreo) {
+        this.direccionCorreo = direccionCorreo;
+    }
+
  
-    public String getDireccion() {
-        return direccion;
-    }
+   
 
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    
+ 
+   
 }
+

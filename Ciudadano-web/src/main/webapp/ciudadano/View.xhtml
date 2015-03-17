@@ -3,32 +3,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewCiudadanoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewCiudadanoLabel_id}"/>
+                    <h:outputText value="#{ciudadanoController.selected.id}" title="#{bundle.ViewCiudadanoTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewCiudadanoLabel_ciudadanoId}"/>
+                    <h:outputText value="#{ciudadanoController.selected.ciudadanoId}" title="#{bundle.ViewCiudadanoTitle_ciudadanoId}"/>
+                    <h:outputText value="#{bundle.ViewCiudadanoLabel_primerNombre}"/>
+                    <h:outputText value="#{ciudadanoController.selected.primerNombre}" title="#{bundle.ViewCiudadanoTitle_primerNombre}"/>
+                    <h:outputText value="#{bundle.ViewCiudadanoLabel_segundoNombre}"/>
+                    <h:outputText value="#{ciudadanoController.selected.segundoNombre}" title="#{bundle.ViewCiudadanoTitle_segundoNombre}"/>
+                    <h:outputText value="#{bundle.ViewCiudadanoLabel_primerAppellido}"/>
+                    <h:outputText value="#{ciudadanoController.selected.primerAppellido}" title="#{bundle.ViewCiudadanoTitle_primerAppellido}"/>
+                    <h:outputText value="#{bundle.ViewCiudadanoLabel_segundoApellido}"/>
+                    <h:outputText value="#{ciudadanoController.selected.segundoApellido}" title="#{bundle.ViewCiudadanoTitle_segundoApellido}"/>
+                    <h:outputText value="#{bundle.ViewCiudadanoLabel_sexo}"/>
+                    <h:outputText value="#{ciudadanoController.selected.sexo}" title="#{bundle.ViewCiudadanoTitle_sexo}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{ciudadanoController.destroyAndView}" value="#{bundle.ViewCiudadanoDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewCiudadanoEditLink}"/>
+                <br />
+                <h:commandLink action="#{ciudadanoController.prepareCreate}" value="#{bundle.ViewCiudadanoCreateLink}" />
+                <br />
+                <h:commandLink action="#{ciudadanoController.prepareList}" value="#{bundle.ViewCiudadanoShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewCiudadanoIndexLink}"/>
 
-        <p:dialog id="CiudadanoViewDlg" widgetVar="CiudadanoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCiudadanoTitle}">
-            <h:form id="CiudadanoViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{ciudadanoController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCiudadanoLabel_ciudadanoId}"/>
-                        <h:outputText value="#{ciudadanoController.selected.ciudadanoId}" title="#{bundle.ViewCiudadanoTitle_ciudadanoId}"/>
-                        <h:outputText value="#{bundle.ViewCiudadanoLabel_primerNombre}"/>
-                        <h:outputText value="#{ciudadanoController.selected.primerNombre}" title="#{bundle.ViewCiudadanoTitle_primerNombre}"/>
-                        <h:outputText value="#{bundle.ViewCiudadanoLabel_segundoNombre}"/>
-                        <h:outputText value="#{ciudadanoController.selected.segundoNombre}" title="#{bundle.ViewCiudadanoTitle_segundoNombre}"/>
-                        <h:outputText value="#{bundle.ViewCiudadanoLabel_primerAppellido}"/>
-                        <h:outputText value="#{ciudadanoController.selected.primerAppellido}" title="#{bundle.ViewCiudadanoTitle_primerAppellido}"/>
-                        <h:outputText value="#{bundle.ViewCiudadanoLabel_segundoApellido}"/>
-                        <h:outputText value="#{ciudadanoController.selected.segundoApellido}" title="#{bundle.ViewCiudadanoTitle_segundoApellido}"/>
-                        <h:outputText value="#{bundle.ViewCiudadanoLabel_sexo}"/>
-                        <h:outputText value="#{ciudadanoController.selected.sexo}" title="#{bundle.ViewCiudadanoTitle_sexo}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="CiudadanoViewDialog.hide()"/>
-                </h:panelGroup>
             </h:form>
-        </p:dialog>
-
+        </ui:define>
     </ui:composition>
+
 </html>

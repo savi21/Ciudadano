@@ -3,63 +3,62 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.savi.ciudadano.modelo.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author savir_000
+ * @author srodriguez
  */
 @Entity
-@Table(name = "DIRECCION")
 public class Direccion implements Serializable {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Direccion_ID")
     private Long direccionId;
     
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "Calle")
     private String calle;
     
-    @Column(name = "Numero_Domicilio")
-    private Long numeroDomicilio;
+    private int numeroDomicilio;
     
-    @JoinColumn(name = "Sector_ID", referencedColumnName = "Sector_ID")
-    @OneToOne
-    private Sector sectorId;
+    @NotNull
+    @Size(min = 1, max = 100)
     
-    @JoinColumn(name = "Ciudad_ID", referencedColumnName = "Ciudad_ID")
-    @OneToOne
+    @JoinColumn(name = "sectorId", referencedColumnName = "sectorId")
+    @ManyToOne
+    private Sector sector;
+
+    private Sector getSector() {
+        return sector;
+    }
+    @JoinColumn(name = "ciudadId", referencedColumnName = "ciudadId")
+    @ManyToOne
     private Ciudad ciudadId;
-    
-    @JoinColumn(name = "Pais_ID", referencedColumnName = "Pais_ID")
-    @OneToOne
+    @JoinColumn(name = "paisId", referencedColumnName = "paisId")
+    @ManyToOne
     private Pais paisId;
-    
-    @JoinColumn(name = "Provincia_ID", referencedColumnName = "Provincia_ID")
-    @OneToOne
+    @JoinColumn(name = "provinciaId", referencedColumnName = "provinciaId")
+    @ManyToOne
     private Provincia provinciaId;
 
     public Direccion() {
     }
 
-    public Direccion(Long direccionId) {
-        this.direccionId = direccionId;
+ 
+    public Direccion( String calle, Sector sector) {
+        this.calle = calle;
+        this.sector = sector;
     }
 
     public Long getDireccionId() {
@@ -78,15 +77,19 @@ public class Direccion implements Serializable {
         this.calle = calle;
     }
 
-    public Long getNumeroDomicilio() {
+    public int getNumeroDomicilio() {
         return numeroDomicilio;
     }
 
-    public void setNumeroDomicilio(Long numeroDomicilio) {
-        this.numeroDomicilio = numeroDomicilio;
+    public void setNumeroDomicilio(int numeroDomicilio) {
+        this.numeroDomicilio=numeroDomicilio;
     }
 
-   
+  
+
+    public void setSector(Sector sector) {
+        this.sector=sector;
+    }
 
     public Ciudad getCiudadId() {
         return ciudadId;
@@ -96,6 +99,7 @@ public class Direccion implements Serializable {
         this.ciudadId = ciudadId;
     }
 
+  
     public Pais getPaisId() {
         return paisId;
     }
@@ -112,20 +116,4 @@ public class Direccion implements Serializable {
         this.provinciaId = provinciaId;
     }
 
-    /**
-     * @return the sectorId
-     */
-    public Sector getSectorId() {
-        return sectorId;
-    }
-
-    /**
-     * @param sectorId the sectorId to set
-     */
-    public void setSectorId(Sector sectorId) {
-        this.sectorId = sectorId;
-    }
-
-  
-    
 }

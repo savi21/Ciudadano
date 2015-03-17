@@ -8,8 +8,8 @@ package com.savi.ciudadano.modelo;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -17,33 +17,40 @@ import javax.persistence.criteria.Root;
 /**
  *
  * @author savir_000
- * @param <T>
  */
-public abstract class ServicioDAO<T> {
+
+public class ServicioDAO<T> {
     
-    @PersistenceContext(unitName = "CRUD_Unit")
+  
     private EntityManager em;
     
-    private final Class<T> entityClass;
+    private Class<T> entityClass;
 
     public ServicioDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
 
     public void create(T entity) {
         em.persist(entity);
     }
 
-    public T edit(T entity) {
-        return em.merge(entity);
+    public boolean edit(T entity) {
+        return em.merge(entity) != null;
     }
 
     public void remove(T entity) {
         em.remove(em.merge(entity));
     }
 
-    public T find(Object id) {
+    public T find(Long id) {
         return em.find(entityClass, id);
     }
 
@@ -56,7 +63,7 @@ public abstract class ServicioDAO<T> {
     public List<T> findRange(int[] range) {
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = em.createQuery(cq);
+        javax.persistence.Query q = em.createQuery(cq);
         q.setMaxResults(range[1] - range[0] + 1);
         q.setFirstResult(range[0]);
         return q.getResultList();
@@ -66,11 +73,16 @@ public abstract class ServicioDAO<T> {
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         Root<T> rt = cq.from(entityClass);
         cq.select(em.getCriteriaBuilder().count(rt));
-        Query q = em.createQuery(cq);
+        javax.persistence.Query q = em.createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
     
-     private void populateQueryParameters(Query query, Map<String, Object> parameters) {
+     public ServicioDAO() {
+		super();
+	}
+
+
+	private void populateQueryParameters(Query query, Map<String, Object> parameters) {
  
         for (Entry<String, Object> entry : parameters.entrySet()) {
             query.setParameter(entry.getKey(), entry.getValue());
@@ -95,5 +107,8 @@ public abstract class ServicioDAO<T> {
  
         return result;
     }
+
+  
     
 }
+

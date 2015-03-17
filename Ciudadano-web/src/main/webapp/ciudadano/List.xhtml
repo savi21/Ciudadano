@@ -3,79 +3,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/template.xhtml">
-
-
         <ui:define name="title">
             <h:outputText value="#{bundle.ListCiudadanoTitle}"></h:outputText>
         </ui:define>
-
         <ui:define name="body">
-            <h:form id="CiudadanoListForm">
-                <p:panel header="#{bundle.ListCiudadanoTitle}">
-                    <p:dataTable id="datalist" value="#{ciudadanoController.items}" var="item"
-                                 selectionMode="single" selection="#{ciudadanoController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.ciudadanoId}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListCiudadanoEmpty}" rendered="#{ciudadanoController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{ciudadanoController.items.rowCount > 0}">
+                    <h:outputText value="#{ciudadanoController.pagination.pageFirstItem + 1}..#{ciudadanoController.pagination.pageLastItem + 1}/#{ciudadanoController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{ciudadanoController.previous}" value="#{bundle.Previous} #{ciudadanoController.pagination.pageSize}" rendered="#{ciudadanoController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{ciudadanoController.next}" value="#{bundle.Next} #{ciudadanoController.pagination.pageSize}" rendered="#{ciudadanoController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{ciudadanoController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCiudadanoTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCiudadanoTitle_ciudadanoId}"/>
                             </f:facet>
                             <h:outputText value="#{item.ciudadanoId}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCiudadanoTitle_primerNombre}"/>
                             </f:facet>
                             <h:outputText value="#{item.primerNombre}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCiudadanoTitle_segundoNombre}"/>
                             </f:facet>
                             <h:outputText value="#{item.segundoNombre}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCiudadanoTitle_primerAppellido}"/>
                             </f:facet>
                             <h:outputText value="#{item.primerAppellido}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCiudadanoTitle_segundoApellido}"/>
                             </f:facet>
                             <h:outputText value="#{item.segundoApellido}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCiudadanoTitle_sexo}"/>
                             </f:facet>
                             <h:outputText value="#{item.sexo}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{ciudadanoController.prepareCreate}" update=":CiudadanoCreateForm" oncomplete="PF('CiudadanoCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CiudadanoViewForm" oncomplete="PF('CiudadanoViewDialog').show()" disabled="#{empty ciudadanoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CiudadanoEditForm" oncomplete="PF('CiudadanoEditDialog').show()" disabled="#{empty ciudadanoController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{ciudadanoController.destroy}" update=":growl,datalist" disabled="#{empty ciudadanoController.selected}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{ciudadanoController.prepareView}" value="#{bundle.ListCiudadanoViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{ciudadanoController.prepareEdit}" value="#{bundle.ListCiudadanoEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{ciudadanoController.destroy}" value="#{bundle.ListCiudadanoDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{ciudadanoController.prepareCreate}" value="#{bundle.ListCiudadanoCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListCiudadanoIndexLink}"/>
             </h:form>
-
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

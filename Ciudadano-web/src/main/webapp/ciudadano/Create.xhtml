@@ -3,33 +3,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
-
-        <p:dialog id="CiudadanoCreateDlg" widgetVar="CiudadanoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCiudadanoTitle}">
-            <h:form id="CiudadanoCreateForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{ciudadanoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateCiudadanoLabel_ciudadanoId}" for="ciudadanoId" />
-                        <p:inputText id="ciudadanoId" value="#{ciudadanoController.selected.ciudadanoId}" title="#{bundle.CreateCiudadanoTitle_ciudadanoId}" />
-                        <p:outputLabel value="#{bundle.CreateCiudadanoLabel_primerNombre}" for="primerNombre" />
-                        <p:inputText id="primerNombre" value="#{ciudadanoController.selected.primerNombre}" title="#{bundle.CreateCiudadanoTitle_primerNombre}" />
-                        <p:outputLabel value="#{bundle.CreateCiudadanoLabel_segundoNombre}" for="segundoNombre" />
-                        <p:inputText id="segundoNombre" value="#{ciudadanoController.selected.segundoNombre}" title="#{bundle.CreateCiudadanoTitle_segundoNombre}" />
-                        <p:outputLabel value="#{bundle.CreateCiudadanoLabel_primerAppellido}" for="primerAppellido" />
-                        <p:inputText id="primerAppellido" value="#{ciudadanoController.selected.primerAppellido}" title="#{bundle.CreateCiudadanoTitle_primerAppellido}" />
-                        <p:outputLabel value="#{bundle.CreateCiudadanoLabel_segundoApellido}" for="segundoApellido" />
-                        <p:inputText id="segundoApellido" value="#{ciudadanoController.selected.segundoApellido}" title="#{bundle.CreateCiudadanoTitle_segundoApellido}" />
-                        <p:outputLabel value="#{bundle.CreateCiudadanoLabel_sexo}" for="sexo" />
-                        <p:inputText id="sexo" value="#{ciudadanoController.selected.sexo}" title="#{bundle.CreateCiudadanoTitle_sexo}" />
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{ciudadanoController.create}" value="#{bundle.Save}" update="display,:CiudadanoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CiudadanoCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CiudadanoCreateDialog.hide()"/>
-                </h:panelGroup>
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateCiudadanoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCiudadanoLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{ciudadanoController.selected.id}" title="#{bundle.CreateCiudadanoTitle_id}" />
+                    <h:outputLabel value="#{bundle.CreateCiudadanoLabel_ciudadanoId}" for="ciudadanoId" />
+                    <h:inputText id="ciudadanoId" value="#{ciudadanoController.selected.ciudadanoId}" title="#{bundle.CreateCiudadanoTitle_ciudadanoId}" />
+                    <h:outputLabel value="#{bundle.CreateCiudadanoLabel_primerNombre}" for="primerNombre" />
+                    <h:inputText id="primerNombre" value="#{ciudadanoController.selected.primerNombre}" title="#{bundle.CreateCiudadanoTitle_primerNombre}" />
+                    <h:outputLabel value="#{bundle.CreateCiudadanoLabel_segundoNombre}" for="segundoNombre" />
+                    <h:inputText id="segundoNombre" value="#{ciudadanoController.selected.segundoNombre}" title="#{bundle.CreateCiudadanoTitle_segundoNombre}" />
+                    <h:outputLabel value="#{bundle.CreateCiudadanoLabel_primerAppellido}" for="primerAppellido" />
+                    <h:inputText id="primerAppellido" value="#{ciudadanoController.selected.primerAppellido}" title="#{bundle.CreateCiudadanoTitle_primerAppellido}" />
+                    <h:outputLabel value="#{bundle.CreateCiudadanoLabel_segundoApellido}" for="segundoApellido" />
+                    <h:inputText id="segundoApellido" value="#{ciudadanoController.selected.segundoApellido}" title="#{bundle.CreateCiudadanoTitle_segundoApellido}" />
+                    <h:outputLabel value="#{bundle.CreateCiudadanoLabel_sexo}" for="sexo" />
+                    <h:inputText id="sexo" value="#{ciudadanoController.selected.sexo}" title="#{bundle.CreateCiudadanoTitle_sexo}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{ciudadanoController.create}" value="#{bundle.CreateCiudadanoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{ciudadanoController.prepareList}" value="#{bundle.CreateCiudadanoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateCiudadanoIndexLink}"/>
             </h:form>
-        </p:dialog>
-
+        </ui:define>
     </ui:composition>
+
 </html>
